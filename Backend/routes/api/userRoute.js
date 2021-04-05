@@ -68,10 +68,10 @@ router.post('/', async (req, res) => {
  * @type   HTTP GET
  * @param {String} id Description. with in the HTTP parameters is the id associated with the user
  */
-router.get('/:id', async (req, res) => {
+router.get('/:appleid', async (req, res) => {
   try {
     //Finds the user based on the user id
-    user = await User.findById(req.params.id)
+    user = await User.findById({appleid: req.params.appleid})
     if (user == null) {
       //If no users are found associated with the id an HTTP 404 RESPONSE will be send back
       res.status(404).json({ message: 'Cant find any users'})

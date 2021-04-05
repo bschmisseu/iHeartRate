@@ -22,7 +22,7 @@ const moment = require('moment');
 const logger = (req, res, next) => {
     //Console logs all the request coming into the server
     console.log(
-        `${req.method} request to ${req.protocol}://${req.get('host')}${req.originalUrl} at ${moment().format()} \n Params \n\t ${req.params} \n Body \n\t ${req.body.bpm}`
+        `${req.method} request to ${req.protocol}://${req.get('host')}${req.originalUrl} at ${moment().format()}`
       );
     //Continues to next 
     next();

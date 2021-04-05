@@ -8,6 +8,7 @@
  */
 
 const express = require('express');
+const moment = require('moment');
 const router = express.Router();
 const HeartRate = require('../../models/heartRate');
 
@@ -69,14 +70,33 @@ router.post('/', async (req, res) => {
  */
 router.get('/:userid', async (req, res) => {
   try {
+    console.log("Userid:", req.params.userid);
     //Grabs all heartrates by specified userid
-    heartRate = await HeartRate.findById(req.params.userid)
+    const heartRate = await HeartRate.find({userid: req.params.userid});
     if (heartRate == null) {
       //If no heart rates are found associated with the user an HTTP 404 RESPONSE will be send back
       res.status(404).json({ message: 'Cant find any heart rates associated with the user'})
     } else {
       //Sends all the heart rates back within json formated data
-      res.json(heartrate)
+      res.json(heartRate)
+    }
+  } catch(err){
+    //If any error is caught a HTTP 500 RESPONSE is set back with the error message
+    res.status(500).json({ message: err.message })
+  }
+});
+
+router.get('/rate/:id', async (req, res) => {
+  try {
+    console.log("HeartRate ID:", req.params.id);
+    //Grabs all heartrates by specified userid
+    const heartRate = await HeartRate.find({_id: req.params.id});
+    if (heartRate == null) {
+      //If no heart rates are found associated with the user an HTTP 404 RESPONSE will be send back
+      res.status(404).json({ message: 'Cant find any heart rates associated with that id'})
+    } else {
+      //Sends all the heart rates back within json formated data
+      res.json(heartRate)
     }
   } catch(err){
     //If any error is caught a HTTP 500 RESPONSE is set back with the error message

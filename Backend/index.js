@@ -12,7 +12,10 @@ require('dotenv').config()
 
 const express = require('express');
 const logger = require('./middleware/logger');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const cors = require('./middleware/cors');
+const heartratepath = require('./routes/api/heartRateRoute');
+const userPath = require('./routes/api/userRoute');
 
 //Creates application
 const app = express();
@@ -32,12 +35,13 @@ db.once('open', () => console.log('Connected to database'))
 
 //Sets up the middleware in order to log the 
 app.use(logger);
+app.use(cors);
 
 // Heart Rate API Routes
-app.use('/api/heartrate', require('./routes/api/HeartRateRoute'));
+app.use('/api/heartrate', heartratepath);
 
 // Heart Rate API Routes
-app.use('/api/user', require('./routes/api/UserRoute'));
+app.use('/api/user', userPath);
 
 //Starts to listen for request for the server=
 app.listen(PORT, () => {
